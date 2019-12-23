@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from "./og";
+import data from "./bibles/og";
 
 const oneVerse = data.books[61].chapters[4].verses[6].text;
 console.log(oneVerse);
