@@ -6,7 +6,7 @@ const chapter = 0;
 const verse = 0;
 const oneVerse = data.books[book].chapters[chapter].verses[verse].text;
 const verseName = data.books[0].chapters[0].verses[0].name;
-const wholeVerse = oneVerse + verseName;
+const wholeVerse = oneVerse + '('+verseName+')';
 
 
 console.log(wholeVerse);
@@ -68,6 +68,7 @@ class VerseMemorize extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            value_main: '',
             verse: wholeVerse,
             bible_words: [],
             text_hash: objectHash.sha1(wholeVerse),
