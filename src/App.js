@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Example1 from './Example1';
+import VerseMemorize from './VerseMemorize';
 
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-				<Example1></Example1>
+                <VerseMemorize />
 
             </div>
         );
