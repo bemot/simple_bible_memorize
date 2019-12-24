@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import data from "./bibles/ru";
 import objectHash from "object-hash";
+import { DropdownList } from 'react-widgets';
+//import 'react-widgets/dist/css/react-widgets.css';
+
 const book = 0;
 const chapter = 0;
 const verse = 0;
@@ -22,6 +25,21 @@ function compareHashes(hash1,hash2) {
 
 }
 
+function ActiveBible (props) {
+    const bibles = ['Ukrainian Ogienko','King James','Rusian Synodal']
+
+    return (
+        <div>
+            <DropdownList
+                data = {bibles}
+                defaultValue={"Ukrainian Ogienko"}
+            />
+
+        </div>
+
+    )
+
+}
 
 function ActiveWords (props) {
       return (
@@ -194,11 +212,13 @@ class VerseMemorize extends Component {
     render() {
      return (
 
-    <div>
+         <div>
+        <div id="activeBible"><ActiveBible /></div>
+        <br />
 
+        <h3>Цитата з Біблії:</h3>
             <div id="bible_text">
-            <h3>Цитата з Біблії:</h3>{this.state.text_hash}
-
+                {this.state.text_hash}
             <br />
               <textarea rows="3" cols="100" id="bible_text" value={this.state.verse}
                                             onChange={this.updateInput_text} />
