@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import data from "./bibles/ru";
 import objectHash from "object-hash";
 import { DropdownList } from 'react-widgets';
-//import 'react-widgets/dist/css/react-widgets.css';
+import 'react-widgets/dist/css/react-widgets.css';
 
 const book = 0;
 const chapter = 0;
