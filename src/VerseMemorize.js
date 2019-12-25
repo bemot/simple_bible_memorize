@@ -26,13 +26,17 @@ function compareHashes(hash1,hash2) {
 }
 
 function ActiveBible (props) {
-    const bibles = ['Ukrainian Ogienko','King James','Rusian Synodal']
+    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
+                    {bible:'kg',bname:'King James'},
+                    {bible:'rs',bname:'Rusian Synodal'}]
 
     return (
         <div>
             <DropdownList
                 data = {bibles}
-                defaultValue={"Ukrainian Ogienko"}
+                valueField='bible' textField='bname'
+                data={bibles}
+                defaultValue={bibles[0]}
             />
 
         </div>
@@ -99,10 +103,11 @@ class VerseMemorize extends Component {
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
-
-    }//end constructor
+       }//end constructor
 
     // all handlers here
+
+
 
   async handleAddAllWords() {
         let i=0;
@@ -249,7 +254,7 @@ class VerseMemorize extends Component {
 
 
             <div id ="active">
-            <  ActiveWords
+              <ActiveWords
                 list={this.state.bible_words.filter((bible_words) => bible_words.active === true)}
                 onRemoveWord={this.handleRemoveWord}
                 onToggleWord={this.handleToggleWord_from_active}
