@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from "./bibles/ru";
+import data from "./bibles/og";
 import objectHash from "object-hash";
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -12,7 +12,7 @@ const verseName = data.books[0].chapters[0].verses[0].name;
 const wholeVerse = oneVerse + '('+verseName+')';
 
 
-console.log(wholeVerse);
+//console.log(wholeVerse);
 
 function compareHashes(hash1,hash2) {
     //console.log(hash1);
@@ -21,22 +21,23 @@ function compareHashes(hash1,hash2) {
         return true
         else
         return false
-
-
 }
 
 function ActiveBible (props) {
     const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
                     {bible:'kg',bname:'King James'},
-                    {bible:'rs',bname:'Rusian Synodal'}]
+                    {bible:'rs',bname:'Rusian Synodal'}];
 
+    console.log(props)
     return (
         <div>
             <DropdownList
                 data = {bibles}
-                valueField='bible' textField='bname'
-                data={bibles}
+                valueField='bible'
+                textField='bname'
                 defaultValue={bibles[0]}
+                onChange={props.handleBibleChange}
+                onSelect={props.handleBibleChange}
             />
 
         </div>
@@ -44,6 +45,38 @@ function ActiveBible (props) {
     )
 
 }
+
+
+function ActiveBook(props) {
+
+    var chaps = []
+
+    // var book_id = 0
+    //var book_name =''
+
+    for (var i=0; i< data.books.length;i++) {
+        chaps.push(
+            {book_id: i,
+             book_name: data.books[i].name
+            }
+        )
+    }
+
+    // console.log(chaps)
+    return(
+        <div>
+            <DropdownList
+                data = {chaps}
+                valueField='book_id'
+                textField= 'book_name'
+                defaultValue={chaps[0].book_name}
+            />
+
+        </div>
+
+    )
+}
+
 
 function ActiveWords (props) {
       return (
@@ -90,6 +123,8 @@ class VerseMemorize extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            bible: data,
+            bible_name:'og',
             value_main: '',
             verse: wholeVerse,
             bible_words: [],
@@ -103,17 +138,26 @@ class VerseMemorize extends Component {
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
+        this.handleBibleChange = this.handleBibleChange.bind(this)
        }//end constructor
 
     // all handlers here
 
+    handleBibleChange(){
+      alert('we are here')
 
+        return (
+
+            <div>hello</div>
+
+        )
+    }
 
   async handleAddAllWords() {
         let i=0;
         let BW_array = [];
         let array2 = [];
-        BW_array = await this.state.verse.match(/.*?[\.\)\s]+?/g);
+        BW_array = await this.state.verse.match(/.*?[.)\s]+?/g);
         //console.log(BW_array);
         while(BW_array.length !== 0) {
             let randomIndex=Math.floor(Math.random() * BW_array.length);
@@ -159,8 +203,8 @@ class VerseMemorize extends Component {
         this.setState((currentState) => {
           const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index)
 
-          this.state.value_main=this.state.value_main +chunk_of_words;
-          this.state.main_hash= objectHash.sha1(this.state.value_main);
+          this.setState.value_main=this.state.value_main +chunk_of_words;
+          this.setState.main_hash= objectHash.sha1(this.state.value_main);
           if (compareHashes(this.state.text_hash,this.state.main_hash)) {
             alert('you made it!');
           }
@@ -181,7 +225,7 @@ class VerseMemorize extends Component {
           const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index)
 
           //this.state.value_main=this.state.value_main +chunk_of_words;
-          this.state.main_hash= objectHash.sha1(this.state.value_main);
+          this.setState.main_hash= objectHash.sha1(this.state.value_main);
           if (compareHashes(this.state.text_hash,this.state.main_hash)) {
             alert('you made it!');
           }
@@ -217,9 +261,12 @@ class VerseMemorize extends Component {
     render() {
      return (
 
-         <div>
-        <div id="activeBible"><ActiveBible /></div>
+      <div>
+          <div id="activeBible" ><ActiveBible onSelect={this.handleBibleChange}/></div>
+          <div id="activeBook"><ActiveBook /></div>
+
         <br />
+
 
         <h3>Цитата з Біблії:</h3>
             <div id="bible_text">
