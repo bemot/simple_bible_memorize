@@ -23,29 +23,6 @@ function compareHashes(hash1,hash2) {
         return false
 }
 
-function ActiveBible (props) {
-    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
-                    {bible:'kg',bname:'King James'},
-                    {bible:'rs',bname:'Rusian Synodal'}];
-
-    console.log(props)
-    return (
-        <div>
-            <DropdownList
-                data = {bibles}
-                valueField='bible'
-                textField='bname'
-                defaultValue={bibles[0]}
-                onChange={props.handleBibleChange}
-                onSelect={props.handleBibleChange}
-            />
-
-        </div>
-
-    )
-
-}
-
 
 function ActiveBook(props) {
 
@@ -124,7 +101,7 @@ class VerseMemorize extends Component {
         super(props)
         this.state = {
             bible: data,
-            bible_name:'og',
+            current_bible : {bible:'og',bname:'Ukrainian Ogienko'},
             value_main: '',
             verse: wholeVerse,
             bible_words: [],
@@ -132,26 +109,46 @@ class VerseMemorize extends Component {
             main_hash: objectHash.sha1(''),
         }
         //binds here
+        console.log(this.state.current_bible)
+
         this.updateInput_text = this.updateInput_text.bind(this)
         this.updateInput_main = this.updateInput_main.bind(this)
         this.handleAddAllWords = this.handleAddAllWords.bind(this);
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
-        this.handleBibleChange = this.handleBibleChange.bind(this)
+        this.activeBible = this.activeBible.bind(this)
        }//end constructor
 
     // all handlers here
 
-    handleBibleChange(){
-      alert('we are here')
+ activeBible () {
+    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
+                    {bible:'kg',bname:'King James'},
+                    {bible:'rs',bname:'Rusian Synodal'}];
 
-        return (
+     let alertWhenChanged = () => console.log('from activeBible');
 
-            <div>hello</div>
+     return (
+        <div>
+            <DropdownList
+                data = {bibles}
+                valueField='bible'
+                textField= 'bname'
+                defaultValue={bibles[0]}
+                onChange={alertWhenChanged}
 
-        )
-    }
+
+
+            />
+
+        </div>
+
+    )
+
+}
+
+
 
   async handleAddAllWords() {
         let i=0;
@@ -262,7 +259,7 @@ class VerseMemorize extends Component {
      return (
 
       <div>
-          <div id="activeBible" ><ActiveBible onSelect={this.handleBibleChange}/></div>
+          <div id="activeBible" ><this.activeBible /></div>
           <div id="activeBook"><ActiveBook /></div>
 
         <br />
