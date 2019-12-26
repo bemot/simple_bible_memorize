@@ -96,8 +96,8 @@ function InactiveWords (props) {
 
 
 
-class VerseMemorize extends Component {
-    constructor(props) {
+   class VerseMemorize extends Component {
+      constructor(props) {
         super(props)
         this.state = {
             bible: data,
@@ -120,8 +120,8 @@ class VerseMemorize extends Component {
         this.activeBible = this.activeBible.bind(this)
        }//end constructor
 
-    // all handlers here
-
+// all handlers here
+///////////////////////////////////////////////////////////////////////////////////
  activeBible () {
     const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
                     {bible:'kg',bname:'King James'},
@@ -148,7 +148,7 @@ class VerseMemorize extends Component {
 
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////
 
   async handleAddAllWords() {
         let i=0;
@@ -187,6 +187,7 @@ class VerseMemorize extends Component {
   } //end handleAddAllWords
 
 
+//////////////////////////////////////////////////////////////////////////////////////
       handleRemoveWord(index) {
         this.setState((currentState) => {
           return {
@@ -195,18 +196,17 @@ class VerseMemorize extends Component {
         })
       }
 
-
-      handleToggleWord_to_active(index,chunk_of_words) {
-        this.setState((currentState) => {
-          const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index)
-
-          this.setState.value_main=this.state.value_main +chunk_of_words;
-          this.setState.main_hash= objectHash.sha1(this.state.value_main);
-          if (compareHashes(this.state.text_hash,this.state.main_hash)) {
-            alert('you made it!');
-          }
-
+//////////////////////////////////////////////////////////////////////////////////////
+handleToggleWord_to_active(index,chunk_of_words) {
+    this.setState((currentState) => {
+         const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index);
+         const hash_string = objectHash.sha1(this.state.value_main + chunk_of_words);
+        if (compareHashes(hash_string,this.state.text_hash)) {
+            alert('You are genius!!!')
+        }
           return {
+            value_main: this.state.value_main + chunk_of_words,
+            main_hash:  hash_string,
             bible_words: currentState.bible_words.filter((bible_word) => bible_word.index !== index)
               .concat([{
                 index,
@@ -216,19 +216,13 @@ class VerseMemorize extends Component {
           }
         })
       }
-
+////////////////////////////////////////////////////////////////////////////////////////
       handleToggleWord_from_active(index,chunk_of_words) {
         this.setState((currentState) => {
           const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index)
 
-          //this.state.value_main=this.state.value_main +chunk_of_words;
-          this.setState.main_hash= objectHash.sha1(this.state.value_main);
-          if (compareHashes(this.state.text_hash,this.state.main_hash)) {
-            alert('you made it!');
-          }
-
           return {
-            bible_words: currentState.bible_words.filter((bible_word) => bible_word.index !== index)
+              bible_words: currentState.bible_words.filter((bible_word) => bible_word.index !== index)
               .concat([{
                 index,
                 chunk_of_words,
@@ -237,24 +231,35 @@ class VerseMemorize extends Component {
           }
         })
       }
-
+////////////////////////////////////////////////////////////////////////////////////////
       updateInput_text(e) {
       //console.log(e.target.value)
-      const value = e.target.value
+      const verse = e.target.value
         this.setState({
-          value: value,
-          text_hash: objectHash.sha1(value),
+          verse: verse,
+          text_hash: objectHash.sha1(verse),
         })
      }
 
-     updateInput_main(e) {
-      const value_main = e.target.value
+////////////////////////////////////////////////////////////////////////////////////////
+   updateInput_main(e) {
+         const value_main = e.target.value
+         const new_hash =  objectHash.sha1(this.state.value_main);
+
+       // console.log(value_main)
+       // console.log('new_hash', new_hash);
+       // console.log('text hash', this.state.text_hash);
+
+       if (compareHashes(new_hash,this.state.text_hash)) {
+            alert('You are genius!!!')
+         }
         this.setState({
           value_main: value_main,
           main_hash: objectHash.sha1(value_main),
         })
-     }
 
+     }
+///////////////////////////////////////////////////////////////////////////////////////
     render() {
      return (
 
@@ -270,7 +275,9 @@ class VerseMemorize extends Component {
                 {this.state.text_hash}
             <br />
               <textarea rows="3" cols="100" id="bible_text" value={this.state.verse}
-                                            onChange={this.updateInput_text} />
+                  onChange={this.updateInput_text}
+
+              />
 
             <br />
                 <button onClick={this.handleAddAllWords}>
@@ -282,8 +289,9 @@ class VerseMemorize extends Component {
             <div id="main_text">
                      {this.state.main_hash}
                 <br />
-                    <textarea rows="3" cols="100" value  ={this.state.value_main}
-                                            onChange={this.updateInput_main}/>
+                    <textarea rows="3" cols="100" value ={this.state.value_main}
+                        onInput={this.updateInput_main}
+                        />
             </div>
 
             <div id="clear_button">
