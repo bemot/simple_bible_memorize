@@ -26,13 +26,13 @@ function compareHashes(hash1,hash2) {
 
 function ActiveBook(props) {
 
-    var chaps = []
+    var knygy = []
 
     // var book_id = 0
     //var book_name =''
 
     for (var i=0; i< data.books.length;i++) {
-        chaps.push(
+        knygy.push(
             {book_id: i,
              book_name: data.books[i].name
             }
@@ -43,10 +43,10 @@ function ActiveBook(props) {
     return(
         <div>
             <DropdownList
-                data = {chaps}
+                data = {knygy}
                 valueField='book_id'
                 textField= 'book_name'
-                defaultValue={chaps[0].book_name}
+                defaultValue={knygy[0].book_name}
             />
 
         </div>
