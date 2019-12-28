@@ -23,18 +23,18 @@ function compareHashes(hash1,hash2) {
         return false
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////
 function ActiveBook(props) {
 
     var knygy = []
 
     // var book_id = 0
     //var book_name =''
-
-    for (var i=0; i< data.books.length;i++) {
+    console.log(props.bible);
+    for (var i=0; i< props.bible.books.length;i++) {
         knygy.push(
             {book_id: i,
-             book_name: data.books[i].name
+             book_name: props.bible.books[i].name
             }
         )
     }
@@ -47,6 +47,10 @@ function ActiveBook(props) {
                 valueField='book_id'
                 textField= 'book_name'
                 defaultValue={knygy[0].book_name}
+                onChange= {(value) => {
+                        console.log(value);
+
+                }}
             />
 
         </div>
@@ -55,6 +59,27 @@ function ActiveBook(props) {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////
+function ActiveBible (props) {
+    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
+                    {bible:'kg',bname:'King James'},
+                    {bible:'rs',bname:'Rusian Synodal'}];
+     //let alertWhenChanged = () => console.log('from activeBible');
+     return (
+        <div>
+            <DropdownList
+                data = {bibles}
+                valueField='bname'
+                textField= 'bname'
+                defaultValue= {bibles[0].bname}
+                onChange = {props.onChange}
+            />
+        </div>
+    )
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
 function ActiveWords (props) {
       return (
         <div>
@@ -95,7 +120,6 @@ function InactiveWords (props) {
 }//end InactiveWords
 
 
-
    class VerseMemorize extends Component {
       constructor(props) {
         super(props)
@@ -109,7 +133,7 @@ function InactiveWords (props) {
             main_hash: objectHash.sha1(''),
         }
         //binds here
-        console.log(this.state.current_bible)
+        //console.log(this.state.current_bible)
 
         this.updateInput_text = this.updateInput_text.bind(this)
         this.updateInput_main = this.updateInput_main.bind(this)
@@ -117,39 +141,17 @@ function InactiveWords (props) {
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
-        this.activeBible = this.activeBible.bind(this)
        }//end constructor
 
 // all handlers here
-///////////////////////////////////////////////////////////////////////////////////
- activeBible () {
-    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
-                    {bible:'kg',bname:'King James'},
-                    {bible:'rs',bname:'Rusian Synodal'}];
 
-     let alertWhenChanged = () => console.log('from activeBible');
-
-     return (
-        <div>
-            <DropdownList
-                data = {bibles}
-                valueField='bible'
-                textField= 'bname'
-                defaultValue={bibles[0]}
-                onChange={alertWhenChanged}
+       handleLoadCurrentBible() {
 
 
 
-            />
 
-        </div>
-
-    )
-
-}
-
+       }
 //////////////////////////////////////////////////////////////////////////////////////
-
   async handleAddAllWords() {
         let i=0;
         let BW_array = [];
@@ -196,11 +198,12 @@ function InactiveWords (props) {
         })
       }
 
+
 //////////////////////////////////////////////////////////////////////////////////////
-handleToggleWord_to_active(index,chunk_of_words) {
-    this.setState((currentState) => {
-         const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index);
-         const hash_string = objectHash.sha1(this.state.value_main + chunk_of_words);
+    handleToggleWord_to_active(index,chunk_of_words) {
+        this.setState((currentState) => {
+          const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index);
+          const hash_string = objectHash.sha1(this.state.value_main + chunk_of_words);
         if (compareHashes(hash_string,this.state.text_hash)) {
             alert('You are genius!!!')
         }
@@ -216,8 +219,10 @@ handleToggleWord_to_active(index,chunk_of_words) {
           }
         })
       }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
-      handleToggleWord_from_active(index,chunk_of_words) {
+    handleToggleWord_from_active(index,chunk_of_words) {
         this.setState((currentState) => {
           const bible_words = currentState.bible_words.find((bible_word) => bible_word.index === index)
 
@@ -231,8 +236,10 @@ handleToggleWord_to_active(index,chunk_of_words) {
           }
         })
       }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
-      updateInput_text(e) {
+    updateInput_text(e) {
       //console.log(e.target.value)
       const verse = e.target.value
         this.setState({
@@ -241,8 +248,9 @@ handleToggleWord_to_active(index,chunk_of_words) {
         })
      }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
-   updateInput_main(e) {
+    updateInput_main(e) {
          const value_main = e.target.value
          const new_hash =  objectHash.sha1(this.state.value_main);
 
@@ -264,14 +272,26 @@ handleToggleWord_to_active(index,chunk_of_words) {
      return (
 
       <div>
-          <div id="activeBible" ><this.activeBible /></div>
-          <div id="activeBook"><ActiveBook /></div>
+          <div id="activeBible" >
+              <ActiveBible value = {this.state.current_bible}
+                onChange={(value) => {
+                    this.setState({
+                        value,
+                        current_bible: value,
+                  })
+                    //console.log(this.state.current_bible)
+                }}/>
+            </div>
+            <div id="activeBook"><ActiveBook
+                   bible={this.state.bible}
+
+         /></div>
 
         <br />
 
 
         <h3>Цитата з Біблії:</h3>
-            <div id="bible_text">
+           <div id="bible_text">
                 {this.state.text_hash}
             <br />
               <textarea rows="3" cols="100" id="bible_text" value={this.state.verse}
@@ -290,7 +310,7 @@ handleToggleWord_to_active(index,chunk_of_words) {
                      {this.state.main_hash}
                 <br />
                     <textarea rows="3" cols="100" value ={this.state.value_main}
-                        onInput={this.updateInput_main}
+                        onChange={this.updateInput_main}
                         />
             </div>
 
@@ -299,8 +319,6 @@ handleToggleWord_to_active(index,chunk_of_words) {
                 bible_words: [],
                 value_main: '',
                 main_hash: objectHash.sha1(''),
-
-
               })}>Все очистити</button>
             </div>
 
@@ -321,6 +339,7 @@ handleToggleWord_to_active(index,chunk_of_words) {
             />
             </div>
 
+            <div>{this.state.current_bible.bname}</div>
           </div>
 
 
