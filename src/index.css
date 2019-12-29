@@ -12,11 +12,19 @@ code {
     monospace;
 }
 
-#activeBible {
+
+#activeVerse {
     width: 179px;
      position: fixed;
     top:0px;
-    left:0px;
+    left:380px;
+
+}
+#activeChapter {
+    width: 179px;
+     position: fixed;
+    top:0px;
+    left:190px;
 
 }
 
@@ -24,7 +32,7 @@ code {
     width:179px;
     position: fixed;
     top:0px;
-    left:180px;
+    left:0px;
 }
 
 #remove_button {

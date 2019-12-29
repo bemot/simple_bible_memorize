@@ -28,7 +28,7 @@ function ActiveBook(props) {
 
     // var book_id = 0
     //var book_name =''
-    console.log(props.bible);
+    //console.log(props.bible);
     for (var i=0; i< props.bible.books.length;i++) {
         knygy.push(
             {book_id: i,
@@ -45,10 +45,77 @@ function ActiveBook(props) {
                 valueField='book_id'
                 textField= 'book_name'
                 defaultValue={knygy[0].book_name}
-                onChange= {(value) => {
-                        console.log(value);
+                onChange= {props.onChange}
 
-                }}
+
+            />
+
+        </div>
+
+    )
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//
+function ActiveChapter(props) {
+
+    var rosdily = []
+
+    console.log(props.bible);
+    console.log(props.book_num)
+    for (var i=0; i< props.bible.books[props.book_num].chapters.length;i++) {
+        rosdily.push(
+            {chapter_id: i,
+             chapter_name: props.bible.books[props.book_num].chapters[i].name
+            }
+        )
+    }
+
+    // console.log(chaps)
+    return(
+        <div>
+            <DropdownList
+                data = {rosdily}
+                valueField='chapter_id'
+                textField= 'chapter_name'
+                defaultValue={rosdily[0].chapter_name}
+                onChange= {props.onChange}
+
+
+            />
+
+        </div>
+
+    )
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+//
+function ActiveVerse(props) {
+
+    var virshi = []
+
+    console.log(props.bible);
+    console.log(props.verse_num)
+    for (var i=0; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
+        virshi.push(
+            {verse_id: i,
+             verse_name: props.bible.books[props.book_num].chapters[props.chap_num].verses[i].name
+            }
+        )
+    }
+
+    // console.log(chaps)
+    return(
+        <div>
+            <DropdownList
+                data = {virshi}
+                valueField='verse_id'
+                textField= 'verse_name'
+                defaultValue={virshi[0].verse_name}
+                onChange= {props.onChange}
+
+
             />
 
         </div>
@@ -57,7 +124,10 @@ function ActiveBook(props) {
 }
 
 
+
 ///////////////////////////////////////////////////////////////////////////////////
+//////// NOT USING IT NOW ////////
+////////////////////////////////////////////////////
 function ActiveBible (props) {
     const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
                     {bible:'kj',bname:'King James'},
@@ -123,6 +193,9 @@ function InactiveWords (props) {
         super(props)
           this.state = {
             bible: data ,
+            bookNumber: 0,
+            chapterNumber: 0,
+            verseNumber: 0,
             current_bible : {bible:'og',bname:'Ukrainian Ogienko'},
             value_main: '',
             verse: wholeVerse,
@@ -139,11 +212,25 @@ function InactiveWords (props) {
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
+        this.handleChangeBCW = this.handleChangeBCW.bind(this)
      }//end constructor
 
 // all handlers heron_encode($data)ta(){
 /////////////////////////////////////////////////////////////////////////////////////
-  async handleAddAllWords() {
+  async handleChangeBCW(bk,ch,vr) {
+    await this.setState((currentState) => {
+      return {
+
+              bookNumber: bk,
+              chapterNumber: ch,
+              verseNumber: vr,
+              verse: data.books[bk].chapters[ch].verses[vr].text,
+          }
+     })
+   }
+
+/////////////////////////////////////////////////////////////////////////////////////
+    async handleAddAllWords() {
         let i=0;
         let BW_array = [];
         let array2 = [];
@@ -155,7 +242,7 @@ function InactiveWords (props) {
             BW_array.splice(randomIndex,1);
         }
         BW_array = array2;
-        console.log(BW_array);
+      //console.log(BW_array);
 
        // console.log(BW_array);
 
@@ -230,10 +317,10 @@ function InactiveWords (props) {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-    updateInput_text(e) {
+   updateInput_text(e) {
       //console.log(e.target.value)
       const verse = e.target.value
-        this.setState({
+       this.setState({
           verse: verse,
           text_hash: objectHash.sha1(verse),
         })
@@ -263,14 +350,38 @@ function InactiveWords (props) {
      return (
 
       <div>
-          <div id="activeBible" >
-              <ActiveBible value = {this.state.current_bible}
-                onChange={this.handleLoadCurrentBible}/>
-            </div>
             <div id="activeBook"><ActiveBook
-                   bible={this.state.bible}
+                    bible={this.state.bible}
+                    onChange={(value) => {
+                        this.handleChangeBCW(value.book_id,0,0)}
+                    }
 
-         /></div>
+              /></div>
+
+      <div id="activeChapter">
+          <ActiveChapter
+              bible={this.state.bible}
+              book_num={this.state.bookNumber}
+              onChange={(value) => {
+                        this.handleChangeBCW(this.state.bookNumber,value.chapter_id,0)}
+              }
+          />
+
+      </div>
+
+       <div id="activeVerse">
+          <ActiveVerse
+              bible={this.state.bible}
+              book_num={this.state.bookNumber}
+              chap_num={this.state.chapterNumber}
+              onChange={(value) => {
+                        console.log(value)
+                        this.handleChangeBCW(this.state.bookNumber,this.state.chapterNumber,value.verse_id)}
+              }
+          />
+
+      </div>
+
 
         <br />
 
@@ -324,8 +435,10 @@ function InactiveWords (props) {
             />
             </div>
 
-            <div>{this.state.current_bible.bname}</div>
-          </div>
+             <div> Book Number = {this.state.bookNumber+1} Chapter Number = {this.state.chapterNumber+1} Verse Number = {this.state.verseNumber+1}</div>
+
+
+         </div>
 
 
         );
