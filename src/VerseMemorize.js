@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from "./bibles/og";
+import data from "./bibles/og.json";
 import objectHash from "object-hash";
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -10,8 +10,6 @@ const verse = 0;
 const oneVerse = data.books[book].chapters[chapter].verses[verse].text;
 const verseName = data.books[0].chapters[0].verses[0].name;
 const wholeVerse = oneVerse + '('+verseName+')';
-
-
 //console.log(wholeVerse);
 
 function compareHashes(hash1,hash2) {
@@ -62,7 +60,7 @@ function ActiveBook(props) {
 ///////////////////////////////////////////////////////////////////////////////////
 function ActiveBible (props) {
     const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
-                    {bible:'kg',bname:'King James'},
+                    {bible:'kj',bname:'King James'},
                     {bible:'rs',bname:'Rusian Synodal'}];
      //let alertWhenChanged = () => console.log('from activeBible');
      return (
@@ -121,10 +119,10 @@ function InactiveWords (props) {
 
 
    class VerseMemorize extends Component {
-      constructor(props) {
+       constructor(props) {
         super(props)
-        this.state = {
-            bible: data,
+          this.state = {
+            bible: data ,
             current_bible : {bible:'og',bname:'Ukrainian Ogienko'},
             value_main: '',
             verse: wholeVerse,
@@ -141,17 +139,10 @@ function InactiveWords (props) {
         this.handleToggleWord_to_active = this.handleToggleWord_to_active.bind(this)
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
-       }//end constructor
+     }//end constructor
 
-// all handlers here
-
-       handleLoadCurrentBible() {
-
-
-
-
-       }
-//////////////////////////////////////////////////////////////////////////////////////
+// all handlers heron_encode($data)ta(){
+/////////////////////////////////////////////////////////////////////////////////////
   async handleAddAllWords() {
         let i=0;
         let BW_array = [];
@@ -274,13 +265,7 @@ function InactiveWords (props) {
       <div>
           <div id="activeBible" >
               <ActiveBible value = {this.state.current_bible}
-                onChange={(value) => {
-                    this.setState({
-                        value,
-                        current_bible: value,
-                  })
-                    //console.log(this.state.current_bible)
-                }}/>
+                onChange={this.handleLoadCurrentBible}/>
             </div>
             <div id="activeBook"><ActiveBook
                    bible={this.state.bible}
