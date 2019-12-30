@@ -91,12 +91,12 @@ function ActiveChapter(props) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 //
-function ActiveVerse(props) {
+ function ActiveVerse(props) {
 
     var virshi = []
 
     console.log(props.bible);
-    console.log(props.verse_num)
+    console.log(props.chap_num)
     for (var i=0; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
             {verse_id: i,
@@ -234,7 +234,8 @@ function InactiveWords (props) {
         let i=0;
         let BW_array = [];
         let array2 = [];
-        BW_array = await this.state.verse.match(/.*?[.)\s]+?/g);
+        ///(/.*?[.)\s]+?/g)
+        BW_array = await this.state.verse.match(/.*?[,.!)\s]+?/g);
         //console.log(BW_array);
         while(BW_array.length !== 0) {
             let randomIndex=Math.floor(Math.random() * BW_array.length);
@@ -317,10 +318,10 @@ function InactiveWords (props) {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-   updateInput_text(e) {
+async   updateInput_text(e) {
       //console.log(e.target.value)
       const verse = e.target.value
-       this.setState({
+     await  this.setState({
           verse: verse,
           text_hash: objectHash.sha1(verse),
         })
