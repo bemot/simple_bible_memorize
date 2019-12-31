@@ -12,6 +12,11 @@ const verseName = data.books[0].chapters[0].verses[0].name;
 const wholeVerse = oneVerse + '('+verseName+')';
 //console.log(wholeVerse);
 
+function rndString(length) {
+  return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length-1));
+}
+
+
 function compareHashes(hash1,hash2) {
     //console.log(hash1);
     //console.log(hash2);
@@ -61,8 +66,8 @@ function ActiveChapter(props) {
 
     var rosdily = []
 
-    console.log(props.bible);
-    console.log(props.book_num)
+    // console.log(props.bible);
+    //console.log(props.book_num)
     for (var i=0; i< props.bible.books[props.book_num].chapters.length;i++) {
         rosdily.push(
             {chapter_id: i,
@@ -95,8 +100,8 @@ function ActiveChapter(props) {
 
     var virshi = []
 
-    console.log(props.bible);
-    console.log(props.chap_num)
+     //console.log(props.bible);
+     // console.log(props.chap_num)
     for (var i=0; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
             {verse_id: i,
@@ -236,7 +241,7 @@ function InactiveWords (props) {
           return {
             bible_words: currentState.bible_words.concat([{
             chunk_of_words: BW_array[i],
-            index: i,
+            index: rndString(10),
             active: false,
             text_hash: objectHash.sha1(this.state.verse),
             main_hash: objectHash.sha1(''),
@@ -358,7 +363,7 @@ async   updateInput_text(e) {
               book_num={this.state.bookNumber}
               chap_num={this.state.chapterNumber}
               onChange={(value) => {
-                        console.log(value)
+                  // console.log(value)
                         this.handleChangeBCW(this.state.bookNumber,this.state.chapterNumber,value.verse_id)}
               }
           />

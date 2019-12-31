@@ -57,15 +57,22 @@ code {
 	top: -43px;
 }
 
+#clear_button {
+	position:relative;
+	left: 0px;
+	top: -57px;
+}
 
 #active {
-    position: fixed;
+    position: absolute;
+    top: 400px;
     left:350px;
     width:530px;
 }
 
 #inactive {
-    position:fixed;
+    position:absolute;
+    top: 400px;
     left:3px;
     width:450px;
 }
@@ -75,6 +82,8 @@ textarea {
    font-family:"Times New Roman", Times, serif;
    font-size: 16.5px;
    width: 565px;
+   color: #005c99;
+   font-weight: bold;
 }
 
 #bible_text {
@@ -83,8 +92,8 @@ textarea {
 }
 
 #main_text {
-	position:fixed;
-	top: 222px;
+	position:relative;
+	top: -140px;
 }
 
 #label_texthash{
