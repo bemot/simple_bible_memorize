@@ -15,23 +15,23 @@ code {
 
 #activeVerse {
     width: 179px;
-     position: fixed;
-    top:0px;
+     position: relative;
+    top:-73px;
     left:380px;
 
 }
 #activeChapter {
     width: 179px;
-     position: fixed;
-    top:0px;
+     position: relative;
+    top:-35px;
     left:190px;
 
 }
 
 #activeBook {
     width:179px;
-    position: fixed;
-    top:0px;
+    position: relative;
+    top:5px;
     left:0px;
 }
 
@@ -51,6 +51,12 @@ code {
      left: 210px;
   }
 
+#divide_button {
+	position:relative;
+	left: 0px;
+	top: -43px;
+}
+
 
 #active {
     position: fixed;
@@ -68,6 +74,27 @@ code {
 textarea {
    font-family:"Times New Roman", Times, serif;
    font-size: 16.5px;
-   width: 620px;
+   width: 565px;
 }
+
+#bible_text {
+	position:relative;
+	top: -70px;
+}
+
+#main_text {
+	position:fixed;
+	top: 222px;
+}
+
+#label_texthash{
+	position:relative;
+	font-size: 12px;
+}
+
+#label_mainhash{
+	position:relative;
+	font-size: 12px;
+	}
+
 

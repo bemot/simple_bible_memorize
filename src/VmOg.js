@@ -124,34 +124,11 @@ function ActiveChapter(props) {
 }
 
 
-
-///////////////////////////////////////////////////////////////////////////////////
-//////// NOT USING IT NOW ////////
-////////////////////////////////////////////////////
-function ActiveBible (props) {
-    const bibles = [{bible:'og',bname:'Ukrainian Ogienko'},
-                    {bible:'kj',bname:'King James'},
-                    {bible:'rs',bname:'Rusian Synodal'}];
-     //let alertWhenChanged = () => console.log('from activeBible');
-     return (
-        <div>
-            <DropdownList
-                data = {bibles}
-                valueField='bname'
-                textField= 'bname'
-                defaultValue= {bibles[0].bname}
-                onChange = {props.onChange}
-            />
-        </div>
-    )
-}
-
-
 //////////////////////////////////////////////////////////////////////////////////
 function ActiveWords (props) {
       return (
         <div>
-          <h3>Правильний вірш з Біблії</h3>
+          <h3>Правильний вірш</h3>
           <ul>
             {props.list.map((bible_words) => (
               <li key={bible_words.index}>
@@ -188,7 +165,7 @@ function InactiveWords (props) {
 }//end InactiveWords
 
 
-   class VerseMemorize extends Component {
+   class VmOg extends Component {
        constructor(props) {
         super(props)
           this.state = {
@@ -225,6 +202,9 @@ function InactiveWords (props) {
               chapterNumber: ch,
               verseNumber: vr,
               verse: data.books[bk].chapters[ch].verses[vr].text,
+              text_hash: objectHash.sha1(data.books[bk].chapters[ch].verses[vr].text),
+
+
           }
      })
    }
@@ -235,7 +215,7 @@ function InactiveWords (props) {
         let BW_array = [];
         let array2 = [];
         ///(/.*?[.)\s]+?/g)
-        BW_array = await this.state.verse.match(/.*?[,.!)\s]+?/g);
+        BW_array = await this.state.verse.match(/.*?[.!)\s]+?/g);
         //console.log(BW_array);
         while(BW_array.length !== 0) {
             let randomIndex=Math.floor(Math.random() * BW_array.length);
@@ -387,24 +367,24 @@ async   updateInput_text(e) {
         <br />
 
 
-        <h3>Цитата з Біблії:</h3>
+               <div id="label_texthash"> {this.state.text_hash} </div>
            <div id="bible_text">
-                {this.state.text_hash}
-            <br />
+		   <br />
               <textarea rows="3" cols="100" id="bible_text" value={this.state.verse}
                   onChange={this.updateInput_text}
 
               />
 
             <br />
-                <button onClick={this.handleAddAllWords}>
+                <button id="divide_button" onClick={this.handleAddAllWords}>
                         Поділити вірш на окремі слова
                 </button>
             <br />
             </div>
 
-            <div id="main_text">
-                     {this.state.main_hash}
+            <div id="label_mainhash">{this.state.main_hash}</div>
+		  <div id="main_text">
+
                 <br />
                     <textarea rows="3" cols="100" value ={this.state.value_main}
                         onChange={this.updateInput_main}
@@ -436,7 +416,6 @@ async   updateInput_text(e) {
             />
             </div>
 
-             <div> Book Number = {this.state.bookNumber+1} Chapter Number = {this.state.chapterNumber+1} Verse Number = {this.state.verseNumber+1}</div>
 
 
          </div>
@@ -447,4 +426,4 @@ async   updateInput_text(e) {
 
 }
 
-export default VerseMemorize;
+export default VmOg;
