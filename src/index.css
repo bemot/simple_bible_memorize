@@ -37,12 +37,12 @@ code {
 
 #remove_button {
      position: absolute;
-     left: 140px;
+     left: 200px;
 
   }
 #deactivate_button {
      position: absolute;
-     left: 245px;
+     left: 300px;
 
   }
 
@@ -66,7 +66,7 @@ code {
 #active {
     position: absolute;
     top: 400px;
-    left:350px;
+    left:310px;
     width:530px;
 }
 
@@ -89,6 +89,7 @@ textarea {
 #bible_text {
 	position:relative;
 	top: -70px;
+    visibility: '';
 }
 
 #main_text {

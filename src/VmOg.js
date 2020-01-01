@@ -219,7 +219,7 @@ function InactiveWords (props) {
         let BW_array = [];
         let array2 = [];
         ///(/.*?[.)\s]+?/g)
-        BW_array = await this.state.verse.match(/.*?[.!)\s]+?/g);
+        BW_array = await this.state.verse.match(/(\*?.{1,20})(?:\s+|$)/g);
         //console.log(BW_array);
         while(BW_array.length !== 0) {
             let randomIndex=Math.floor(Math.random() * BW_array.length);

@@ -31,9 +31,8 @@ const RussianSynodal = () => (
 
 
 class App extends Component {
-
     render() {
-        return (
+      return (
       <Router>
        <div className="">
          <nav className="navbar-expand-md bg-dark navbar-dark">
