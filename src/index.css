@@ -19,7 +19,7 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 10px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -65,8 +65,7 @@ button {
 	position:absolute;
 	top: 350px;
     width:250px;
-    font-size: 12 px;
-}
+   }
 
 #clear_button {
 	position:absolute;
