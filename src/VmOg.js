@@ -374,7 +374,7 @@ async   updateInput_text(e) {
                <div id="label_texthash"> {this.state.text_hash} </div>
            <div id="bible_text">
 		   <br />
-              <textarea rows="3" cols="100" id="bible_text" value={this.state.verse}
+              <textarea rows="4" cols="100" id="bible_text" value={this.state.verse}
                   onChange={this.updateInput_text}
 
               />
@@ -390,7 +390,7 @@ async   updateInput_text(e) {
 		  <div id="main_text">
 
                 <br />
-                    <textarea rows="3" cols="100" value ={this.state.value_main}
+                    <textarea rows="4" cols="100" value ={this.state.value_main}
                         onChange={this.updateInput_main}
                         />
             </div>
