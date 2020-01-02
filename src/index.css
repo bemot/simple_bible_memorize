@@ -12,6 +12,16 @@ code {
     monospace;
 }
 
+button {
+  background-color: #2874a6;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+}
 
 #activeVerse {
     width: 179px;
@@ -52,15 +62,17 @@ code {
   }
 
 #divide_button {
-	position:relative;
-	left: 0px;
-	top: -43px;
+	position:absolute;
+	top: 350px;
+    width:250px;
+    font-size: 12 px;
 }
 
 #clear_button {
-	position:relative;
-	left: 0px;
-	top: -57px;
+	position:absolute;
+	left: 160px;
+	top: 198px;
+    width:150px;
 }
 
 #active {
@@ -87,23 +99,25 @@ textarea {
 }
 
 #bible_text {
-	position:relative;
-	top: -70px;
+	position:absolute;
+	top: 45px;
     visibility: '';
 }
 
 #main_text {
-	position:relative;
-	top: -140px;
+	position:absolute;
+	top: 235px;
 }
 
 #label_texthash{
-	position:relative;
+	position:absolute;
+    top:205px;
 	font-size: 12px;
 }
 
 #label_mainhash{
-	position:relative;
+	position:absolute;
+    top:370px;
 	font-size: 12px;
 	}
 
