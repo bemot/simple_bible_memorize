@@ -49,7 +49,7 @@ class App extends Component {
   <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <Nav.Link href="/ukrainiaogienko">Ukrainian Ogienko</Nav.Link>
-        <Nav.Link href="/kingjames">King Jame Bible</Nav.Link>
+        <Nav.Link href="/kingjames">King James Bible</Nav.Link>
         <Nav.Link href="/russiansynodal">Russian Synodal</Nav.Link>
 
     </Nav>
