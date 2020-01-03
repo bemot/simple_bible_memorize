@@ -45,7 +45,6 @@ button {
    }
 
 #clear_button {
-
 }
 
 #active {
@@ -71,11 +70,11 @@ button {
 }
 
 #label_texthash{
-	font-size: 7px;
+	font-size: 11px;
 }
 
 #label_mainhash{
-	font-size: 7px;
+	font-size: 11px;
 	}
 
 

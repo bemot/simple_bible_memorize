@@ -62,8 +62,8 @@ function ActiveChapter(props) {
 
     var rosdily = []
 
-    console.log(props.bible);
-    console.log(props.book_num)
+    //console.log(props.bible);
+    //console.log(props.book_num)
     for (var i=0; i< props.bible.books[props.book_num].chapters.length;i++) {
         rosdily.push(
             {chapter_id: i,
@@ -96,8 +96,8 @@ function ActiveChapter(props) {
 
     var virshi = []
 
-    console.log(props.bible);
-    console.log(props.chap_num)
+     // console.log(props.bible);
+     //console.log(props.chap_num)
     for (var i=0; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
             {verse_id: i,
@@ -383,7 +383,7 @@ async   updateInput_text(e) {
               book_num={this.state.bookNumber}
               chap_num={this.state.chapterNumber}
               onChange={(value) => {
-                        console.log(value)
+                  // console.log(value)
                         this.handleChangeBCW(this.state.bookNumber,this.state.chapterNumber,value.verse_id)}
               }
           />

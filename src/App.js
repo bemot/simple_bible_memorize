@@ -11,6 +11,13 @@ import VmRs from './VmRs';
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/dist/css/react-widgets.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const Home = () => (
     <div className = "UkrainianOgienko"> <VmOg /></div>
@@ -32,26 +39,32 @@ const RussianSynodal = () => (
 
 class App extends Component {
     render() {
-      return (
+        return (
+            <div className="container">
       <Router>
-       <div className="">
-         <nav className="navbar-expand-md bg-dark navbar-dark">
-          <ul className="navbar-nav">
-            <li className="nav-item"><Link to="/" className="nav-link"></Link></li>
-            <li className="nav-item"><Link to="/kingjames" className="nav-link">King James</Link></li>
-            <li className="nav-item"><Link to="/ukrainiaogienko" className="nav-link">Ukrainian Ogienko</Link></li>
-            <li className="nav-item"><Link to="/russiansynodal" className="nav-link">Russian Synodal</Link></li>
-          </ul>
-         </nav>
+
+<Navbar bg="light" expand="lg">
+  <Navbar.Brand href="#home">Bible Memorizer</Navbar.Brand>
+  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mr-auto">
+        <Nav.Link href="/ukrainiaogienko">Ukrainian Ogienko</Nav.Link>
+        <Nav.Link href="/kingjames">King Jame Bible</Nav.Link>
+        <Nav.Link href="/russiansynodal">Russian Synodal</Nav.Link>
+
+    </Nav>
+
+  </Navbar.Collapse>
+            </Navbar>
          <Switch>
-             <Route exact path="/" component={Home}/>
+             <Route exact path="/" component={UkrainianOgienko}/>
              <Route path="/kingjames" component={KingJames}/>
              <Route path="/ukrainiaogienko" component={UkrainianOgienko}/>
              <Route path="/russiansynodal" component={RussianSynodal}/>
          </Switch>
-        </div>
-      </Router>
 
+      </Router>
+  </div>
         )
     }
 }
