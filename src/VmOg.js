@@ -93,16 +93,16 @@ function ActiveChapter(props) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 //
- function ActiveVerse(props) {
+function ActiveVerse(props) {
 
      var virshi = [];
 
      // console.log(props.bible);
      //console.log(props.chap_num)
      //console.log(props.value)
-    for (var i=1; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
+     for (var i=0; i < props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
-            {verse_id: i,
+            {verse_id: i+1,
              verse_name: props.bible.books[props.book_num].chapters[props.chap_num].verses[i].name
             }
         )

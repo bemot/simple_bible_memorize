@@ -31,7 +31,7 @@ function ActiveBook(props) {
     // var book_id = 0
     //var book_name =''
     //console.log(props.bible);
-    for (var i=0; i< props.bible.books.length;i++) {
+    for (var i=0; i < props.bible.books.length;i++) {
         knygy.push(
             {book_id: i,
              book_name: props.bible.books[i].name
@@ -100,9 +100,9 @@ function ActiveChapter(props) {
      // console.log(props.bible);
      //console.log(props.chap_num)
      //console.log(props.value)
-    for (var i=1; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
+     for (var i=0; i < props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
-            {verse_id: i,
+            {verse_id: i+1,
              verse_name: props.bible.books[props.book_num].chapters[props.chap_num].verses[i].name
             }
         )
