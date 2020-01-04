@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import data from "./bibles/rs.json";
 import objectHash from "object-hash";
 import { DropdownList } from 'react-widgets';
+import { Multiselect } from 'react-widgets';
 import 'react-widgets/dist/css/react-widgets.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
@@ -94,11 +95,12 @@ function ActiveChapter(props) {
 //
  function ActiveVerse(props) {
 
-    var virshi = []
+     var virshi = [];
 
-     //console.log(props.bible);
+     // console.log(props.bible);
      //console.log(props.chap_num)
-    for (var i=0; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
+     //console.log(props.value)
+    for (var i=1; i< props.bible.books[props.book_num].chapters[props.chap_num].verses.length;i++) {
         virshi.push(
             {verse_id: i,
              verse_name: props.bible.books[props.book_num].chapters[props.chap_num].verses[i].name
@@ -109,12 +111,12 @@ function ActiveChapter(props) {
     // console.log(chaps)
     return(
         <div>
-            <DropdownList
+            <Multiselect
                 data = {virshi}
                 valueField='verse_id'
-                textField= 'verse_name'
-                defaultValue={virshi[0].verse_name}
-                onChange= {props.onChange}
+                textField='verse_id'
+                onChange={props.onChange}
+                defaultValue={[1]}
 
 
             />
@@ -213,7 +215,8 @@ function InactiveWords (props) {
         this.handleToggleWord_from_active = this.handleToggleWord_from_active.bind(this)
         this.handleRemoveWord = this.handleRemoveWord.bind(this)
         this.handleChangeBCW = this.handleChangeBCW.bind(this)
-     }//end constructor
+          this.handleChangeBCVirshi = this.handleChangeBCVirshi.bind(this)
+       }//end constructor
 
 // all handlers heron_encode($data)ta(){
 /////////////////////////////////////////////////////////////////////////////////////
@@ -231,6 +234,30 @@ function InactiveWords (props) {
           }
      })
    }
+
+
+   async handleChangeBCVirshi(bk,ch,value) {
+      let virsh ='';
+      var i =0;
+      //console.log(value);
+      for (; i < value.length;i++) {
+          //console.log(i)
+          virsh += data.books[bk].chapters[ch].verses[value[i].verse_id-1].text + ' '
+          //console.log(virsh)
+        }
+      await this.setState((currentState) => {
+        return {
+             bookNumber: bk,
+             chapterNumber: ch,
+             verse: virsh,
+             text_hash: objectHash.sha1(virsh),
+
+            }
+
+          }
+     )
+   }
+
 
 /////////////////////////////////////////////////////////////////////////////////////
     async handleAddAllWords() {
@@ -384,7 +411,7 @@ async   updateInput_text(e) {
               chap_num={this.state.chapterNumber}
               onChange={(value) => {
                   // console.log(value)
-                        this.handleChangeBCW(this.state.bookNumber,this.state.chapterNumber,value.verse_id)}
+                        this.handleChangeBCVirshi(this.state.bookNumber,this.state.chapterNumber,value)}
               }
           />
       </div>
