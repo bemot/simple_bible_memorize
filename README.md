@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 # biblememorizer
+=======
+Bible Memorizer. 
+Demo: http://biblememorize.gideons.org.ua
+
+>>>>>>> 36b018c351705e0c01d0645dbcead43ea26ff839
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
