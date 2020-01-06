@@ -14,6 +14,14 @@ const verseName = data.books[0].chapters[0].verses[0].name;
 const wholeVerse = oneVerse + '('+verseName+')';
 //console.log(wholeVerse);
 
+function makeIndex(len) {
+
+  let s = '';
+    while (s.length < len) s += Math.random().toString(36).substr(2, len - s.length);
+    //console.log(s);
+  return s;
+}
+
 function compareHashes(hash1,hash2) {
     //console.log(hash1);
     //console.log(hash2);
@@ -264,7 +272,7 @@ function InactiveWords (props) {
         let BW_array = [];
         let array2 = [];
         ///(/.*?[.)\s]+?/g)
-        BW_array = await this.state.verse.match(/(\*?.{1,20})(?:\s+|$)/g);
+        BW_array = await this.state.verse.match(/(\*?.{1,28})(?:\s+|$)/g);
         //console.log(BW_array);
         while(BW_array.length !== 0) {
             let randomIndex=Math.floor(Math.random() * BW_array.length);
@@ -283,7 +291,7 @@ function InactiveWords (props) {
           return {
             bible_words: currentState.bible_words.concat([{
             chunk_of_words: BW_array[i],
-            index: i,
+            index: makeIndex(10),
             active: false,
             text_hash: objectHash.sha1(this.state.verse),
             main_hash: objectHash.sha1(''),
